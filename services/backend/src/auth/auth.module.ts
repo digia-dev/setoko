@@ -1,4 +1,6 @@
+// prettier-ignore
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './auth.controller';
@@ -8,9 +10,12 @@ import { JwtStrategy } from './jwt.strategy';
 @Module({
   imports: [
     PassportModule,
+    ConfigModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET || 'dev-secret',
-      signOptions: { expiresIn: process.env.JWT_EXPIRES_IN || '7d' },
+      signOptions: {
+        expiresIn: process.env.JWT_EXPIRES_IN || '7d',
+      },
     }),
   ],
   controllers: [AuthController],
